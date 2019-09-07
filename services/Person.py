@@ -23,7 +23,7 @@ class Person:
     return  self.r['topScoringIntent']['intent']
   def getEntity(self):
     return  self.r['entities'][0]['entity']
-#p=Person("mahanati review")
+#p=Person("maharshi review")
 #print(p.getIntent())
 #print(p.getEntity())
 

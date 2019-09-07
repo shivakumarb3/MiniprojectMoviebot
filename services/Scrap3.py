@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-class Scrap:
+class Scrap3:
     def __init__(self, entity,intent):
         self.e = entity
         self.i=intent
@@ -14,29 +14,26 @@ class Scrap:
 
          r1=requests.get("https://www.google.com/search",params=p)
          #print(r1)
+         #print(r1.text)
          #print(self.i)
          soup = BeautifulSoup(r1.text,"html.parser")
-         li = soup.find('span', {'class': 'oqSTJd'})
-         li2=soup.find('div', {'class': 'BNeawe vvjwJb AP7Wnd'})
-         #li2=soup.findAll("div", class_="BNeawe vvjwJb AP7Wnd")
+         print(soup)
+         li = soup.find("div", class_="BNeawe iBp4i AP7Wnd")
+         #li=soup.find_all('div', {'class': 'BNeawe iBp4i AP7Wnd'})
          #li=soup.select('div.BNeawe s3v9rd AP7Wnd')
+         #li=None
+         #print(li)
          s=""
          #print(soup)
-         #print(li2)
          #print(li)
-         r=""
-         #print("starts now")
-         if li2!=None:
-            for element  in li2:
-                #print(element)
-                r=r+"\n"+element
-                #print(element)
+         #for element in li:
+           #print(element)
+           #s=s+element.get_text()+"\n"
          if li!=None:
-            for element in li:
-                #print(element)
-                s=s+"\n"+element
-         return s+""+r
-#v=Scrap("evaru ","review")
+            for el in li:
+                s=s+el.get_text()+"\n"
+         return s
+#v=Scrap3("bharat","box office collections")
 #print(v.getAnswer())
 #r=Review("rangasthalam")
 #print(v.getAnswer())

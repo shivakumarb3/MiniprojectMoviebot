@@ -7,8 +7,11 @@ from botframework.connector import ConnectorClient
 from botframework.connector.auth import (MicrosoftAppCredentials,
                                          JwtTokenValidation, SimpleCredentialProvider)
 from services.Person import *
-from services.Review import *
+#from services.Review import *
 from services.Scrap import *
+from services.Scrap2 import *
+from services.Scrap3 import *
+from services.Scrap4 import *
 
 
 APP_ID = ''
@@ -33,7 +36,7 @@ class BotRequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         if activity.members_added[0].id != activity.recipient.id:
             credentials = MicrosoftAppCredentials(APP_ID, APP_PASSWORD)
-            reply = BotRequestHandler.__create_reply_activity(activity, 'Hello and welcome to the MOVIE BOT !')
+            reply = BotRequestHandler.__create_reply_activity(activity, 'Hello and welcome to the MOVIE BOT ! 📽')
             connector = ConnectorClient(credentials, base_url=reply.service_url)
             connector.conversations.send_to_conversation(reply.conversation.id, reply)
 
@@ -45,19 +48,32 @@ class BotRequestHandler(http.server.BaseHTTPRequestHandler):
         a=''
         b=''
         res=''
+        res=activity.text
         p1=Person(activity.text)
         a=p1.getIntent()
         b=p1.getEntity()
-        if a=='present' and b=='movies' :
-           res="devdas"
-        if a=="review":
-           r=Scrap(b)
-           res=r.getAnswer()
+        if(a=="starters"):
+            res="hello I am a movie bot \n I will give you ratings, reviews, cast and crew and all other movie details  😊 "
+        elif(a=="review" or a=="rating"):
+            r=Scrap(b,a)
+            res=r.getAnswer()
+        elif(a=="grattitude"):
+            res="you are welcome \n I am your assistant after all  😊"
+        elif(a=="crew"):
+            r=Scrap4(b,a)
+            res=r.getAnswer()
+        elif(a=="details"):
+            r=Scrap2(b,a)
+            res=r.getAnswer()
+
+
+        #res=a+" "+b
 
             
         #here databse comes into role where movie name matches with the reviews
-        
-        reply = BotRequestHandler.__create_reply_activity(activity, 'movie bot: %s' % res )
+        l="🤟"
+        res=res+" "+l
+        reply = BotRequestHandler.__create_reply_activity(activity, 'movie bot: %s' % res)
         print (activity.text)
         connector.conversations.send_to_conversation(reply.conversation.id, reply)
 
@@ -96,7 +112,7 @@ class BotRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
 try:
-    SERVER = http.server.HTTPServer(('localhost', 9000), BotRequestHandler)
+    SERVER = http.server.HTTPServer(('0.0.0.0', 9000), BotRequestHandler)
     print('Started http server')
     SERVER.serve_forever()
 except KeyboardInterrupt:
