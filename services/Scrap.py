@@ -25,17 +25,25 @@ class Scrap:
          #print(li2)
          #print(li)
          r=""
+         ans=set({})
          #print("starts now")
          if li2!=None:
             for element  in li2:
-                #print(element)
-                r=r+"\n"+element
-                #print(element)
+                if element not in ans:
+                    ans.add(element)
+                    r=r+element+"\n"
+                
+         #print(ans1)
          if li!=None:
             for element in li:
+                if element not in ans:
+                    ans.add(element)
+                    r=r+element+"\n"
                 #print(element)
-                s=s+"\n"+element
-         return s+""+r
+            
+         #print(ans2)
+         
+         return r
 #v=Scrap("evaru ","review")
 #print(v.getAnswer())
 #r=Review("rangasthalam")

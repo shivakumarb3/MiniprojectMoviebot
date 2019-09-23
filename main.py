@@ -12,11 +12,12 @@ from services.Scrap import *
 from services.Scrap2 import *
 from services.Scrap3 import *
 from services.Scrap4 import *
+from services.Scrap5 import *
 
 
 APP_ID = ''
 APP_PASSWORD = ''
-
+ 
 
 class BotRequestHandler(http.server.BaseHTTPRequestHandler):
 
@@ -51,7 +52,9 @@ class BotRequestHandler(http.server.BaseHTTPRequestHandler):
         res=activity.text
         p1=Person(activity.text)
         a=p1.getIntent()
-        b=p1.getEntity()
+        b=p1.getEntity() 
+        print("intent:"+a)
+        print("entitty:"+b)
         if(a=="starters"):
             res="hello I am a movie bot \n I will give you ratings, reviews, cast and crew and all other movie details  😊 "
         elif(a=="review" or a=="rating"):
@@ -64,6 +67,12 @@ class BotRequestHandler(http.server.BaseHTTPRequestHandler):
             res=r.getAnswer()
         elif(a=="details"):
             r=Scrap2(b,a)
+            res=r.getAnswer()
+        elif(a=="movie collections"):
+            r=Scrap3(b,a)
+            res=r.getAnswer()
+        elif(a=="trending movies"):
+            r=Scrap5(b,a)
             res=r.getAnswer()
 
 
@@ -118,3 +127,11 @@ try:
 except KeyboardInterrupt:
     print('^C received, shutting down server')
     SERVER.socket.close()
+#app = web.Application()
+#app.router.add_post('/', messages)
+
+#try:
+    #web.run_app(app, host='localhost', port='9000')
+    #print('started http server')
+#except Exception as e:
+    #aise e

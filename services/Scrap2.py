@@ -19,16 +19,23 @@ class Scrap2:
          soup = BeautifulSoup(r1.text,"html.parser")
          li = soup.find_all("div", class_="BNeawe s3v9rd AP7Wnd")
          #li=soup.select('div.BNeawe s3v9rd AP7Wnd')
-         s=""
+         r=""
          #print(soup)
          #print(li)
          #for element in li:
            #print(element)
            #s=s+element.get_text()+"\n"
+         ans=set({})
+         pl=[]
+         #print(ans1)
          for el in li:
-               s=s+(el.get_text())+"\n"
-         return s
-#v=Scrap2("maharshi","crew")
+             k=el.get_text()
+             if k not in ans:
+                   ans.add(k)
+                   r=r+k+"\n"
+         #print(pl)
+         return r
+v=Scrap2("maharshi","crew")
 #print(v.getAnswer())
 #r=Review("rangasthalam")
 #print(v.getAnswer())

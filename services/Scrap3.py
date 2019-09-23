@@ -17,8 +17,8 @@ class Scrap3:
          #print(r1.text)
          #print(self.i)
          soup = BeautifulSoup(r1.text,"html.parser")
-         print(soup)
-         li = soup.find("div", class_="BNeawe iBp4i AP7Wnd")
+         #print(soup)
+         li = soup.find_all("div", class_="BNeawe s3v9rd AP7Wnd")
          #li=soup.find_all('div', {'class': 'BNeawe iBp4i AP7Wnd'})
          #li=soup.select('div.BNeawe s3v9rd AP7Wnd')
          #li=None
@@ -29,12 +29,19 @@ class Scrap3:
          #for element in li:
            #print(element)
            #s=s+element.get_text()+"\n"
+         ans=set({})
+         pl=[]
          if li!=None:
             for el in li:
-                s=s+el.get_text()+"\n"
+                t=el.get_text()
+                #print(t)
+                if( (("₹" in t or "$" in t or "USD" in t) and ":" in t) and(t not in ans)):
+                    ans.add(t)
+                    s=s+t+"\n"
+                    
          return s
-#v=Scrap3("bharat","box office collections")
-#print(v.getAnswer())
+v=Scrap3("avengers end game","movie collections")
+print(v.getAnswer())
 #r=Review("rangasthalam")
 #print(v.getAnswer())
       
